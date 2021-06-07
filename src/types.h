@@ -9,6 +9,9 @@
 #include <time.h>
 #include <openssl/md5.h>
 
+#define MD5_DIGEST_LENGTH 50
+#define NAME_MAX 50
+
 typedef enum {DIRECTORY, REGULAR_FILE, OTHER_TYPE} e_type;
 
 typedef struct _file {
