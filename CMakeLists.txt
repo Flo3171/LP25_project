@@ -13,8 +13,8 @@ file(
     src/*
 )
 
-add_executable(LP25_project ${source_files} src/types.h)
+add_executable(LP25_project ${source_files})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION}) 
 include(CPack)
