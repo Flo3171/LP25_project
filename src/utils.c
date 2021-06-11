@@ -8,3 +8,15 @@
  * @copyright GNU GENERAL PUBLIC LICENSE
  * 
  */
+
+#include "include.h"
+
+char* getFilePath(char* fileName, char* dirPath){
+    char* filePath = (char*)malloc(sizeof(char)*(strlen(dirPath)+ strlen(fileName) + 2));
+    strcpy(filePath, fileName);
+    strcat(filePath, "/");
+    strcat(filePath, dirPath);
+
+    return filePath;
+
+}

@@ -3,7 +3,19 @@
 int main(int argc, char const *argv[])
 {
     printf("*************program start*************\n");
-    process_dir("/home/flo/LP25/LP25_project");
+    // if (argc == 1){
+    //     process_dir(".");
+    // }
+    // else{
+    //     while (--argc > 0){
+    //         process_dir(*++argv);
+    //     }
+    // }
+
+    printf("%s\n", getFilePath("/bin/doc", "bon.c"));
+
+
+
 
     printf("*************program stop*************\n");
     return 0;
