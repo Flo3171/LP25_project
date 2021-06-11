@@ -22,13 +22,14 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include "types.h"
 
 #include "scan.h"
-#include "linkList.h"
 #include "md5sum.h"
 #include "utils.h"
+#include "tree.h"
 
 
 #endif //_INCLUDE_H_

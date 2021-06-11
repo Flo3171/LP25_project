@@ -14,4 +14,14 @@
 
 char* getFilePath(char* fileName, char* dirPath);
 
+/**
+ * @brief Get the File Name object
+ * 
+ * @param path 
+ * @return char* 
+ * @author Florian CLOAREC
+ */
+char* getFileName(char* path);
+
+
 #endif //_UTILS_H_

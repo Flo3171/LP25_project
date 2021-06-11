@@ -11,10 +11,9 @@ int compute_md5(char *path, unsigned char buffer[])
 {
 
     //créer un md5
-
     MD5_CTX *c;
     FILE *f = fopen(path, "r");
-    char *str = malloc(512 * sizeof(char));
+    char *str = (char*)malloc(512 * sizeof(char));
 
     MD5_Init(c);
     fseek(f, 0L, SEEK_END);

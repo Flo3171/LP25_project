@@ -1,4 +1,4 @@
-#include "tree.h"
+#include "include.h"
 
 int append_subdir(s_directory *child, s_directory *parent)
 {
@@ -42,7 +42,7 @@ void clear_files(s_directory *parent)
 	s_file *temp1 = NULL;
 	while(temp != NULL){
 		temp1 = temp->next_file;
-		free(temp);
+		free_s_file(temp);
 		temp = temp1;
 	}
 }
@@ -56,7 +56,7 @@ void clear_subdirs(s_directory *parent)
 		if(temp->subdirs != NULL)clear_subdirs(temp);
 		if(temp->files != NULL)clear_files(temp);
 		temp1 = temp->next_dir;
-		free(temp);
+		free_s_directory(temp);
 		temp = temp1;
 	}
 }

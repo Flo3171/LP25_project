@@ -34,97 +34,87 @@ s_directory *process_dir(char *path){
     struct dirent* dirent;
     while ((dirent = readdir(dir)) != NULL)
     {
-        switch (dirent->d_type)
+        if (dirent->d_type == DT_DIR)
         {
-
-        case S_IFREG:{
-            /* regular file */
-            s_file* newFile = (s_file*)malloc(sizeof(s_file));
-
-            newFile->name = dirent->d_name;
-            newFile->file_type = dirent->d_type;
-
-            struct stat *fileStat;
-
-            char* filePath = getFilePath(newFile->name, path);
-            
-            stat(filePath, fileStat);
-            newFile->file_size = fileStat->st_size;
-
-            compute_md5(filePath, newFile->md5sum);
-
-            
-
-            free(filePath);
-            break;
+            //process dir
         }
-        case S_IFDIR:
-            /*directory*/
-            break;
-
-        case S_IFLNK:
-            /* symbolik link */
-            break;
-        
-        default :
-            /*other*/
-            break;
+        else{
+            //process file
         }
     }
-    
-
-
-    
-    
-
-
-    // directory->name = NULL;
-    // directory->mod_time = 1;
-    // directory->subdirs = NULL;
-    // directory->files = NULL;
-    // directory->next_dir = NULL;
-    // dirent = readdir(dir);
-    // while (dirent != NULL){
-        
-    //     printf("name :%s\t\t", dirent->d_name); 
-    //     printf("type :%d\t", dirent->d_type);
-    //     printf("inode :%lu \t", dirent->d_ino);
-    //     printf("off :%ld\t",dirent->d_off);
-    //     printf("reclen :%d\n", dirent->d_reclen);
-        
-    
-    //     dirent = readdir(dir);f
-        
-    // }
-
-    
-
     return directory;
 
 }
 
 s_file *process_file(char *path){
 
-
-    // s_file* file = (s_file*)malloc(sizeof(s_file));
-
-    // file->file_type = REGULAR_FILE;
-    // file->name = NULL;
-    // file->mod_time = 1;
-    // file->file_size = 1;
-    // file->md5sum = NULL;
-
-    // if(file->file_type == SYMBOLIK_LINK){
-    //     file->pointed_file = process_file(NULL);
-    // }
-    // else{
-    //     file->pointed_file = NULL;
-    // }
+    s_file* newFile = (s_file*)malloc(sizeof(s_file));
     
+    struct stat *fileStat;
+    stat(path, fileStat);
 
+    switch (fileStat->st_mode){
+        case S_IFREG:
+        {
+            /* regular file */
+            newFile->file_type = REGULAR_FILE;
+            newFile->name = getFileName(path);
+            newFile->mod_time = fileStat->st_mtim.tv_sec;
+            newFile->file_size = fileStat->st_size;
+            
+            char md5sum[MD5_DIGEST_LENGTH];
+            compute_md5(path, md5sum);
+            newFile->md5sum = md5sum;
 
-    // file->next_file = NULL;
+            newFile->pointed_file = NULL;
+            newFile->next_file = NULL;
+            break;
+        }
+        case S_IFDIR:
+            /*directory*/
+            return NULL;
+            break;
 
-    return NULL; //file;
+        case S_IFLNK:
+        {
+            /* symbolik link */
+            newFile->file_type = SYMBOLIK_LINK;
+            newFile->name = getFileName(path);
+            newFile->mod_time = fileStat->st_mtim.tv_sec;
+            newFile->file_size = 0;
+            newFile->md5sum = NULL;
+
+            char pointed_file_path[MAXNAMLEN+1];
+            readlink(path, pointed_file_path, sizeof(pointed_file_path));
+
+            newFile->pointed_file = process_file(pointed_file_path);
+            newFile->next_file = NULL;
+            break;
+        }
+            
+        
+        default :
+            /*other*/
+            newFile->file_type = OTHER_TYPE;
+            newFile->name = getFileName(path);
+            newFile->mod_time = fileStat->st_mtim.tv_sec;
+            newFile->file_size = 0;
+            newFile->md5sum = NULL;
+            newFile->pointed_file = NULL;
+            newFile->next_file = NULL;
+            break;
+    }
+    return newFile;
+}
+
+void free_s_file(s_file* file){
+    free(file->name);
+    free(file->md5sum);
+    free(file);
+}
+
+void free_s_directory(s_directory* dir){
+    free(dir->name);
+    free(dir);
 }
 

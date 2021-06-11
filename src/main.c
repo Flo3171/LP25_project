@@ -13,8 +13,9 @@ int main(int argc, char const *argv[])
     // }
 
     printf("%s\n", getFilePath("/bin/doc", "bon.c"));
+    printf("%s\n", getFileName("bin/src/coucou.c"));
 
-
+    
 
 
     printf("*************program stop*************\n");

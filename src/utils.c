@@ -20,3 +20,20 @@ char* getFilePath(char* fileName, char* dirPath){
     return filePath;
 
 }
+
+char* getFileName(char* path){
+
+    int lastSlashIndex = 0;
+    for (size_t i = 0; i < strlen(path); i++)
+    {
+        if (path[i] == '/'){
+            lastSlashIndex = i;
+        }
+    }
+    
+    char* fileName = (char*)malloc(sizeof(char)*(strlen(path) - lastSlashIndex + 1));
+
+    strcpy(fileName, &path[lastSlashIndex + 1]);
+
+    return fileName;
+}
