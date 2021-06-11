@@ -6,7 +6,11 @@
 #define LP25_PROJECT_TYPES_H
 
 
+#define MD5_DIGEST_LENGTH 50
+#define NAME_MAX 50
+
 typedef enum {DIRECTORY, REGULAR_FILE, SYMBOLIK_LINK, OTHER_TYPE} e_type;
+
 
 typedef struct _file {
     e_type file_type;
