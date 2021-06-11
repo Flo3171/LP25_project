@@ -12,4 +12,6 @@
  * 
  */
 
+char* getFilePath(char* fileName, char* dirPath);
+
 #endif //_UTILS_H_

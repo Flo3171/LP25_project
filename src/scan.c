@@ -13,39 +13,93 @@
 
 s_directory *process_dir(char *path){
 
-    DIR *dir;
-    struct dirent *dirent;
-    dir = opendir(path);
+    DIR* dir = opendir(".");
     if (dir == NULL){
-        printf("unable to open the dir");
+        fprintf(stderr, "unable to open the dir : %s\n", path);
         exit(0);
+    }
+
+    s_directory* directory = (s_directory*)malloc(sizeof(s_directory));
+    if (directory == NULL){
+        fprintf(stderr, "unable to allocate memory\n");
+        exit(0);
+    }
+
+    directory->files = NULL;
+    directory->next_dir = NULL;
+
+    
+
+
+    struct dirent* dirent;
+    while ((dirent = readdir(dir)) != NULL)
+    {
+        switch (dirent->d_type)
+        {
+
+        case S_IFREG:{
+            /* regular file */
+            s_file* newFile = (s_file*)malloc(sizeof(s_file));
+
+            newFile->name = dirent->d_name;
+            newFile->file_type = dirent->d_type;
+
+            struct stat *fileStat;
+
+            char* filePath = getFilePath(newFile->name, path);
+            
+            stat(filePath, fileStat);
+            newFile->file_size = fileStat->st_size;
+
+            compute_md5(filePath, newFile->md5sum);
+
+            
+
+            free(filePath);
+            break;
+        }
+        case S_IFDIR:
+            /*directory*/
+            break;
+
+        case S_IFLNK:
+            /* symbolik link */
+            break;
+        
+        default :
+            /*other*/
+            break;
+        }
     }
     
 
-    // s_directory* directory = (s_directory*)malloc(sizeof(s_directory));
+
+    
+    
+
 
     // directory->name = NULL;
     // directory->mod_time = 1;
     // directory->subdirs = NULL;
     // directory->files = NULL;
     // directory->next_dir = NULL;
-    dirent = readdir(dir);
-    while (dirent != NULL){
+    // dirent = readdir(dir);
+    // while (dirent != NULL){
         
-        printf("name :%s\t\t", dirent->d_name); 
-        printf("type :%d\t", dirent->d_type);
-        printf("inode :%lu \t", dirent->d_ino);
-        printf("off :%ld\t",dirent->d_off);
-        printf("reclen :%d\n", dirent->d_reclen);
+    //     printf("name :%s\t\t", dirent->d_name); 
+    //     printf("type :%d\t", dirent->d_type);
+    //     printf("inode :%lu \t", dirent->d_ino);
+    //     printf("off :%ld\t",dirent->d_off);
+    //     printf("reclen :%d\n", dirent->d_reclen);
         
     
-        dirent = readdir(dir);
+    //     dirent = readdir(dir);f
         
-    }
+    // }
 
-    closedir(dir);
+    
 
-    return NULL;// directory;
+    return directory;
 
 }
 
@@ -73,3 +127,4 @@ s_file *process_file(char *path){
 
     return NULL; //file;
 }
+

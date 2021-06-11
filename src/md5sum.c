@@ -1,5 +1,6 @@
 #include "include.h"
 
+<<<<<<< HEAD
 /**
  * @brief Calcule la marque MD5 d'un fichier
  * 
@@ -37,4 +38,8 @@ int compute_md5(char *path, unsigned char buffer[])
     }
 
     MD5_Final(buffer, c);
+=======
+int compute_md5(char *path, unsigned char buffer[]){
+    return 0;
+>>>>>>> fbb0e7d680ba4fcffffcbb639cf39d4f2a17730e
 }
