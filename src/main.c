@@ -3,17 +3,17 @@
 int main(int argc, char const *argv[])
 {
     printf("*************program start*************\n");
-    // if (argc == 1){
-    //     process_dir(".");
-    // }
-    // else{
-    //     while (--argc > 0){
-    //         process_dir(*++argv);
-    //     }
-    // }
 
-    printf("%s\n", getFilePath("/bin/doc", "bon.c"));
-    printf("%s\n", getFileName("bin/src/coucou.c"));
+    s_directory* dir;
+    if (argc == 1){
+        dir = process_dir("./test");
+    }
+    else{
+       dir = process_dir(argv[1]);
+    }
+
+    // printf("%s\n", getFilePath("coucou", "/bin/src"));
+
 
     
 

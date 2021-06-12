@@ -13,7 +13,7 @@
 
 s_directory *process_dir(char *path){
 
-    DIR* dir = opendir(".");
+    DIR* dir = opendir(path);
     if (dir == NULL){
         fprintf(stderr, "unable to open the dir : %s\n", path);
         exit(0);
@@ -25,21 +25,33 @@ s_directory *process_dir(char *path){
         exit(0);
     }
 
+    struct stat dirStat;
+    if (stat(path, &dirStat) == -1)
+    {
+        printf("error on stat with %s", path);
+        exit(0);
+    }
+
+    directory->name = getFileName(path);
+    directory->mod_time = dirStat.st_mtim.tv_sec;
+    directory->subdirs = NULL;
     directory->files = NULL;
     directory->next_dir = NULL;
-
-    
-
 
     struct dirent* dirent;
     while ((dirent = readdir(dir)) != NULL)
     {
         if (dirent->d_type == DT_DIR)
         {
-            //process dir
+            if (strcmp(dirent->d_name, "..") != 0 &&  strcmp(dirent->d_name, ".") != 0)
+            {
+                append_subdir(process_dir(getFilePath(dirent->d_name, path)), directory);
+            }
+            
+            
         }
         else{
-            //process file
+            append_file(process_file(getFilePath(dirent->d_name, path)), directory);
         }
     }
     return directory;
@@ -50,17 +62,23 @@ s_file *process_file(char *path){
 
     s_file* newFile = (s_file*)malloc(sizeof(s_file));
     
-    struct stat *fileStat;
-    stat(path, fileStat);
+    struct stat fileStat;
 
-    switch (fileStat->st_mode){
+    if (stat(path, &fileStat) == -1)
+    {
+        printf("error on stat with %s", path);
+        exit(0);
+    }
+    
+
+    switch (fileStat.st_mode & S_IFMT){
         case S_IFREG:
         {
             /* regular file */
             newFile->file_type = REGULAR_FILE;
             newFile->name = getFileName(path);
-            newFile->mod_time = fileStat->st_mtim.tv_sec;
-            newFile->file_size = fileStat->st_size;
+            newFile->mod_time = fileStat.st_mtim.tv_sec;
+            newFile->file_size = fileStat.st_size;
             
             char md5sum[MD5_DIGEST_LENGTH];
             compute_md5(path, md5sum);
@@ -80,7 +98,7 @@ s_file *process_file(char *path){
             /* symbolik link */
             newFile->file_type = SYMBOLIK_LINK;
             newFile->name = getFileName(path);
-            newFile->mod_time = fileStat->st_mtim.tv_sec;
+            newFile->mod_time = fileStat.st_mtim.tv_sec;
             newFile->file_size = 0;
             newFile->md5sum = NULL;
 
@@ -97,7 +115,7 @@ s_file *process_file(char *path){
             /*other*/
             newFile->file_type = OTHER_TYPE;
             newFile->name = getFileName(path);
-            newFile->mod_time = fileStat->st_mtim.tv_sec;
+            newFile->mod_time = fileStat.st_mtim.tv_sec;
             newFile->file_size = 0;
             newFile->md5sum = NULL;
             newFile->pointed_file = NULL;

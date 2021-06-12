@@ -13,9 +13,9 @@
 
 char* getFilePath(char* fileName, char* dirPath){
     char* filePath = (char*)malloc(sizeof(char)*(strlen(dirPath)+ strlen(fileName) + 2));
-    strcpy(filePath, fileName);
+    strcpy(filePath, dirPath);
     strcat(filePath, "/");
-    strcat(filePath, dirPath);
+    strcat(filePath, fileName);
 
     return filePath;
 
@@ -24,9 +24,10 @@ char* getFilePath(char* fileName, char* dirPath){
 char* getFileName(char* path){
 
     int lastSlashIndex = 0;
-    for (size_t i = 0; i < strlen(path); i++)
+    int pathLen = strlen(path);
+    for (size_t i = 0; i < pathLen; i++)
     {
-        if (path[i] == '/'){
+        if (path[i] == '/' && i != pathLen -1){
             lastSlashIndex = i;
         }
     }
@@ -34,6 +35,11 @@ char* getFileName(char* path){
     char* fileName = (char*)malloc(sizeof(char)*(strlen(path) - lastSlashIndex + 1));
 
     strcpy(fileName, &path[lastSlashIndex + 1]);
+
+    int finalLen = strlen(fileName);
+    if(fileName[finalLen -1] == '/'){
+        fileName[finalLen-1] = '\0';
+    }
 
     return fileName;
 }
