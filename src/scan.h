@@ -20,7 +20,7 @@
  * @return s_directory* : the struct with all the data about the directory
  * @author Florian CLOAREC
  */
-s_directory *process_dir(char *path);
+s_directory *process_dir(char *path, bool computeMd5);
 
 
 /**
@@ -30,7 +30,7 @@ s_directory *process_dir(char *path);
  * @return s_file* : the struct with all the data avout the file
  * @author Florian CLOAREC
  */
-s_file *process_file(char *path);
+s_file *process_file(char *path, bool computeMd5);
 
 
 /**
