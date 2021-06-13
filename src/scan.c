@@ -11,7 +11,7 @@
 
 #include "include.h"
 
-s_directory *process_dir(char *path){
+s_directory *process_dir(char *path, bool computeMd5){
 
     DIR* dir = opendir(path);
     if (dir == NULL){
@@ -45,20 +45,26 @@ s_directory *process_dir(char *path){
         {
             if (strcmp(dirent->d_name, "..") != 0 &&  strcmp(dirent->d_name, ".") != 0)
             {
-                append_subdir(process_dir(getFilePath(dirent->d_name, path)), directory);
+                char* dirPath = getFilePath(dirent->d_name, path);
+                append_subdir(process_dir(dirPath, compute_md5), directory);
+                free(dirPath);
             }
             
             
         }
         else{
-            append_file(process_file(getFilePath(dirent->d_name, path)), directory);
+            char* filePath = getFilePath(dirent->d_name, path);
+            append_file(process_file(filePath, compute_md5), directory);
+            free(filePath);
         }
     }
+
+    closedir(dir);
     return directory;
 
 }
 
-s_file *process_file(char *path){
+s_file *process_file(char *path, bool computeMd5){
 
     s_file* newFile = (s_file*)malloc(sizeof(s_file));
     
@@ -80,9 +86,15 @@ s_file *process_file(char *path){
             newFile->mod_time = fileStat.st_mtim.tv_sec;
             newFile->file_size = fileStat.st_size;
             
-            char md5sum[MD5_DIGEST_LENGTH];
-            compute_md5(path, md5sum);
-            newFile->md5sum = md5sum;
+            if(compute_md5){
+                char md5sum[MD5_DIGEST_LENGTH];
+                compute_md5(path, md5sum);
+                newFile->md5sum = md5sum;
+            }
+            else{
+                newFile->md5sum = NULL;
+            }
+            
 
             newFile->pointed_file = NULL;
             newFile->next_file = NULL;
@@ -105,7 +117,7 @@ s_file *process_file(char *path){
             char pointed_file_path[MAXNAMLEN+1];
             readlink(path, pointed_file_path, sizeof(pointed_file_path));
 
-            newFile->pointed_file = process_file(pointed_file_path);
+            newFile->pointed_file = process_file(pointed_file_path, compute_md5);
             newFile->next_file = NULL;
             break;
         }
