@@ -19,10 +19,18 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdio.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <stdbool.h>
 
 #include "types.h"
 
 #include "scan.h"
+#include "md5sum.h"
+#include "utils.h"
+#include "tree.h"
 
 
 #endif //_INCLUDE_H_
