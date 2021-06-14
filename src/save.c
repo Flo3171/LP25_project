@@ -9,7 +9,7 @@ int save_to_file(s_directory *root, const char* path_to_target, const char* curr
     if (!output) {
         perror("ERROR: Couldn't open target file");
         fprintf(stderr, "Couldn't open %s!\n", path_to_target);
-        return NULL;
+        return -1;
     }
 
     int res = save_to_file_recursive(output, root, 0, current_path);
