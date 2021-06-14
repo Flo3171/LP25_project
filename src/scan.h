@@ -33,24 +33,5 @@ s_directory *process_dir(char *path, bool computeMd5);
 s_file *process_file(char *path, bool computeMd5);
 
 
-/**
- * @brief free a s_file variable
- * 
- * @param file 
- * @author Florian CLOAREC
- */
-void free_s_file(s_file* file);
-
-
-/**
- * @brief  free a s_directory variable
- * 
- * @param dir 
- * @author Florian CLOAREC
- */
-void free_s_directory(s_directory* dir);
-
-
-
 
 #endif  //_SCAN_H_
