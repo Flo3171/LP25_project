@@ -136,14 +136,3 @@ s_file *process_file(char *path, bool computeMd5){
     }
     return newFile;
 }
-
-void free_s_file(s_file* file){
-    free(file->name);
-    free(file->md5sum);
-    free(file);
-}
-
-void free_s_directory(s_directory* dir){
-    free(dir->name);
-    free(dir);
-}
