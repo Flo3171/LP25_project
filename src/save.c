@@ -20,7 +20,6 @@ int save_to_file(s_directory *root, const char* path_to_target, const char* curr
 }
 
 int save_to_file_recursive(FILE* output, s_directory* current_dir, int depth, const char* current_path) {
-    //Put the right number of tabulations in a string (VLA!)
     char tabulations[depth + 2];
     int i = 0;
     for (; i < depth; i++) {
@@ -28,19 +27,17 @@ int save_to_file_recursive(FILE* output, s_directory* current_dir, int depth, co
     }
     tabulations[i] = '\0';
 
-    //write the current directory informations
     fputs(tabulations, output);
-    construct_dir_line(output, *current_dir, current_path);
+    write_directory(output, *current_dir, current_path);
     fputs("\n", output);
 
     tabulations[i] = '\t';
     tabulations[i+1] = '\0';
 
-    //writes files
     s_file *current_file = current_dir->files;
     while (current_file != NULL) {
         fputs(tabulations, output);
-        construct_file_line(output, *current_file, current_path);
+        write_file(output, *current_file, current_path);
         fputs("\n", output);
 
         current_file = current_file->next_file;
@@ -61,10 +58,10 @@ int save_to_file_recursive(FILE* output, s_directory* current_dir, int depth, co
     return 0;
 }
 
-int construct_file_line(FILE* output, s_file file, const char* path_to_parent_dir){
+int write_file(FILE* output, s_file file, const char* path_to_parent_dir){
     char buffer[200] = {0};
 
-    fputs("1\t", output); //e_type
+    fprintf(output, "%d\t", file.file_type);
 
     strftime(buffer, 200, "%Y-%m-%d %H:%M:%S\t", localtime(&file.mod_time));
     fputs(buffer, output); //time_t
@@ -83,7 +80,7 @@ int construct_file_line(FILE* output, s_file file, const char* path_to_parent_di
     return 0;
 }
 
-int construct_dir_line(FILE* output, s_directory dir, const char* path_to_parent_dir){
+int write_directory(FILE* output, s_directory dir, const char* path_to_parent_dir){
     char lil_buf[200] = {0};
 
     fputs("0\t", output); //e_type
@@ -96,7 +93,7 @@ int construct_dir_line(FILE* output, s_directory dir, const char* path_to_parent
     return 0;
 }
 
-int construct_other_line(FILE* output, s_file file, const char* path_to_parent_dir){
+int write_other(FILE* output, s_file file, const char* path_to_parent_dir){
     char buffer[200] = {0};
 
     fputs("2\t", output); //e_type

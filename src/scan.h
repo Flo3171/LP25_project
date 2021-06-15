@@ -14,7 +14,7 @@
 
 
 /**
- * @brief recursive fuction that scan a directory and create the struct in memory whith all the sub directory and file
+ * @brief recursive function that scan a directory and create the struct in memory with all the sub directory and file
  * 
  * @param path : the path of the directory to scan
  * @return s_directory* : the struct with all the data about the directory
@@ -24,9 +24,9 @@ s_directory *process_dir(char *path, bool computeMd5);
 
 
 /**
- * @brief create and combute the struc s_file whit the data of a file
+ * @brief create and compute the struct s_file whit the data of a file
  * 
- * @param path : the path of the file to comute
+ * @param path : the path of the file to compute
  * @return s_file* : the struct with all the data avout the file
  * @author Florian CLOAREC
  */
