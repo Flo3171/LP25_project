@@ -1,8 +1,14 @@
-//
-// Created by theod on 08/06/2021.
-//
+/**
+ * @file save.c
+ * @brief source file that contain the implementation of the function in the save part of the project
+ * @version 0.1
+ * @date 15 June 2021
+ * 
+ * @copyright GNU GENERAL PUBLIC LICENSE
+ * 
+ */
 
-#include "save.h"
+#include "include.h"
 
 int save_to_file(s_directory *root, char *path_to_target, const char *current_path) {
     FILE *output = fopen(path_to_target, "w");

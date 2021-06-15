@@ -1,3 +1,14 @@
+/**
+ * @file main.c
+ * @author Florian Cloarec
+ * @brief main file that contain the main fuction of the project
+ * @version 0.1
+ * @date 15 June 2021
+ * 
+ * @copyright GNU GENERAL PUBLIC LICENSE
+ * 
+ */
+
 #include "include.h"
 
 int main(int argc, char *argv[])

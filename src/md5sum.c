@@ -1,17 +1,21 @@
+/**
+ * @file md5sum.c
+ * @author Florian Cloarec
+ * @brief source file that contain the implementation of the function in the md5sum part of the project
+ * @version 0.1
+ * @date 15 June 2021
+ * 
+ * @copyright GNU GENERAL PUBLIC LICENSE
+ * 
+ */
+
 #include "include.h"
 
-/**
- * @brief Calcule la marque MD5 d'un fichier
- * 
- * @param path chemin du fichier à calculer
- * @param buffer 
- * @return int 
- */
 int compute_md5(char *path, unsigned char buffer[])
 {
 
     //créer un md5
-    
+    /*
     MD5_CTX *c = NULL;
     FILE *f = fopen(path, "r");
     char *str = (char*)malloc(512 * sizeof(char));
@@ -41,4 +45,5 @@ int compute_md5(char *path, unsigned char buffer[])
     free(str);
     
     return 1;
+    */
 }

@@ -1,3 +1,13 @@
+/**
+ * @file tree.c
+ * @brief source file that contain the implementation of the function in the tree part of the project
+ * @version 0.1
+ * @date 15 June 2021
+ * 
+ * @copyright GNU GENERAL PUBLIC LICENSE
+ * 
+ */
+
 #include "include.h"
 
 int append_subdir(s_directory *child, s_directory *parent)
@@ -13,7 +23,7 @@ int append_subdir(s_directory *child, s_directory *parent)
 		temp->next_dir = child;
 	}
 	
-	//Je sais pas quoi retourner
+	
 	if(parent->subdirs == NULL)return 0;
 	else return 1;
 }
@@ -30,8 +40,6 @@ int append_file(s_file *child, s_directory *parent)
 		}
 		temp->next_file = child;
 	}
-	
-	//Je sais pas quoi retourner
 	if(parent->files == NULL)return 0;
 	else return 1;
 }

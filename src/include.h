@@ -12,6 +12,8 @@
  * 
  */
 
+/* include of the c standard library */
+
 #include <linux/limits.h>
 #include <time.h>
 #include <openssl/md5.h>
@@ -25,6 +27,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdbool.h>
+
+/* include of our .h file */
 
 #include "types.h"
 

@@ -1,11 +1,16 @@
-//
-// Created by theod on 08/06/2021.
-//
+/**
+ * @file save.h
+ * @author Florian Cloarec
+ * @brief header file of the function in the save part of the project
+ * @version 0.1
+ * @date 15 June 2021
+ * 
+ * @copyright GNU GENERAL PUBLIC LICENSE
+ * 
+ */
 
 #ifndef LP25_PROJECT_SAVE_H
 #define LP25_PROJECT_SAVE_H
-
-#include "include.h"
 
 /**
  * Save the directory tree in the file
