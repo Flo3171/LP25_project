@@ -87,8 +87,7 @@ s_file *process_file(char *path, bool computeMd5){
             newFile->file_size = fileStat.st_size;
 
             if(computeMd5){
-                unsigned char md5sum[MD5_DIGEST_LENGTH];
-
+                unsigned char* md5sum = (unsigned char*)malloc(sizeof(unsigned char)* MD5_DIGEST_LENGTH);
                 compute_md5(path, md5sum);
                 newFile->md5sum = md5sum;
             }
