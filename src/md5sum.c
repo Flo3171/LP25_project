@@ -15,35 +15,22 @@ int compute_md5(char *path, unsigned char buffer[])
 {
 
     //créer un md5
-    /*
-    MD5_CTX *c = NULL;
-    FILE *f = fopen(path, "r");
-    char *str = (char*)malloc(512 * sizeof(char));
-
-    MD5_Init(c);
-    fseek(f, 0L, SEEK_END);
-    long size = ftell(f);
-    rewind(f);
-
-    while (size > 0)
-    {
-        if (size > 512)
-        {
-            str = fgets(str, 512, f);
-            MD5_Update(c, str, 512);
-        }
-        else
-        {
-            str = fgets(str, size, f);
-            MD5_Update(c, str, size);
-        }
-        size -= 512;
+    FILE* f = fopen(path,"rb");
+    MD5_CTX md5Context;
+    int bytes;
+    unsigned char data[1024];
+    
+    if(f==NULL){
+    	printf("%s can't be opened",path);
+    	return 0;
     }
-
-    MD5_Final(buffer, c);
+    
+    MD5_Init(&md5Context);
+    while((bytes=fread(data,1,1024,f)) !=0)
+    	MD5_Update(&md5Context,data,bytes);
+    MD5_Final(buffer,&md5Context);
+    
     fclose(f);
-    free(str);
     
     return 1;
-    */
 }
