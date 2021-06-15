@@ -19,6 +19,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -31,6 +32,6 @@
 #include "md5sum.h"
 #include "utils.h"
 #include "tree.h"
-
+#include "save.h"
 
 #endif //_INCLUDE_H_

@@ -60,3 +60,14 @@ void clear_subdirs(s_directory *parent)
 		temp = temp1;
 	}
 }
+
+void free_s_file(s_file* file){
+    free(file->name);
+    free(file->md5sum);
+    free(file);
+}
+
+void free_s_directory(s_directory* dir){
+    free(dir->name);
+    free(dir);
+}
