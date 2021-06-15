@@ -12,7 +12,7 @@ int compute_md5(char *path, unsigned char buffer[])
 
     //créer un md5
     
-    MD5_CTX *c;
+    MD5_CTX *c = NULL;
     FILE *f = fopen(path, "r");
     char *str = (char*)malloc(512 * sizeof(char));
 
@@ -26,16 +26,19 @@ int compute_md5(char *path, unsigned char buffer[])
         if (size > 512)
         {
             str = fgets(str, 512, f);
-            MD5_Update(&c, str, 512);
+            MD5_Update(c, str, 512);
         }
         else
         {
             str = fgets(str, size, f);
-            MD5_Update(&c, str, size);
+            MD5_Update(c, str, size);
         }
         size -= 512;
     }
 
     MD5_Final(buffer, c);
+    fclose(f);
+    free(str);
     
+    return 1;
 }

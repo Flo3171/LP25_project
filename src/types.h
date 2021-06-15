@@ -15,7 +15,7 @@ typedef struct _file {
     time_t mod_time;
     uint64_t file_size;
     //char md5sum[MD5_DIGEST_LENGTH];
-    char *md5sum;
+    unsigned char *md5sum;
     struct _file *pointed_file;
     struct _file *next_file;
 } s_file;

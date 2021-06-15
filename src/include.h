@@ -19,6 +19,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #include <fcntl.h>
 #include <sys/stat.h>
