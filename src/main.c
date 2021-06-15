@@ -3,19 +3,28 @@
 int main(int argc, char *argv[])
 {
 	int opt;
-	char * dir_analyze = NULL;
-	char * save_file = NULL;
+	char * dir_analyze = (char*)malloc(sizeof(char)*2);
+	strcpy(dir_analyze, ".");
+
+	char * save_file = (char*)malloc(sizeof(char)* 7);
+	strcpy(save_file, "./save");
+
 	bool md5 = false;
 	while((opt=getopt(argc,argv,"i:so:")) != -1)
 	{
 		switch(opt)
 		{
-			case 'i':dir_analyze = malloc(sizeof(char)*strlen(optarg)+1);
+			case 'i':
+				free(dir_analyze);
+				dir_analyze = malloc(sizeof(char)*strlen(optarg)+1);
+				strcpy(dir_analyze, optarg);
 				dir_analyze = optarg;
 				//printf("i : %s\n",dir_analyze);
 				break;
-			case 'o':save_file = malloc(sizeof(char)*strlen(optarg)+1);
-				save_file = optarg;
+			case 'o':
+				free(save_file);
+				save_file = malloc(sizeof(char)*strlen(optarg)+1);
+				strcpy(save_file, optarg);
 				//printf("o : %s\n",save_file);
 				break;
 			case 's': md5 = true;
@@ -51,8 +60,9 @@ int main(int argc, char *argv[])
 
     save_to_file(dir, save_file, dir_analyze);
 
-    printf("*************program stop*************\n");
     // Liberating memory
     free(save_file);
+
+	printf("*************program stop*************\n");
     return 0;
 }

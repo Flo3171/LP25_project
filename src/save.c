@@ -46,6 +46,11 @@ int save_to_file_recursive(FILE *output, s_directory *current_dir, int depth, co
     s_directory *subdir = current_dir->subdirs;
     while (subdir != NULL) {
         char *new_path = (char *) malloc(strlen(current_path) + strlen(subdir->name) + 2);
+        if(new_path == NULL){
+            printf("error on malloc");
+            exit(0);
+        }
+
         strcpy(new_path, current_path);
         strcat(new_path, "/");
         strcat(new_path, subdir->name);
