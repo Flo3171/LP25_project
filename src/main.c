@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	
     s_directory* dir;
     if (dir_analyze == NULL){
-        dir = process_dir("./test",md5);
+        dir = process_dir(".",md5);
     }
     else{
        dir = process_dir(dir_analyze,md5);
